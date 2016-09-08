@@ -9,7 +9,7 @@ float destinationY;
 float randomX;
 float randomY;
 
-boolean newoption = false;
+int count=0;
 
 void setup() 
 {
@@ -17,6 +17,7 @@ void setup()
   smooth();
   frameRate(30);
   //////////////////////////////////
+  background(100,200,150);
   randomX = (random(50,450)*50)%450;
   randomY = (random(50,450)*50)%450;
   fill(255,255,0);
@@ -26,7 +27,9 @@ void setup()
 void draw() 
 {
   background(100,200,150);
-    
+  fill(255,255,0);
+  ellipse(randomX,randomY,50,50);
+  
   float targetX = mouseX;
   float targetY = mouseY;
   x = x + (targetX - x) * easing;
@@ -37,18 +40,10 @@ void draw()
   
   if(x>(randomX-50) && x<(randomX+50) && y>(randomY-50) && y<(randomY+50))
   {
-    newoption = true;
+    randomX = (random(50,450)*50)%450;
+    randomY = (random(50,450)*50)%450;
+    count++;
+    //println(count);
   }
-  else
-  {
-    newoption = false;
-  }
-    if (newoption == true)
-  {
-   randomX = (random(50,450)*50)%450;
-   randomY = (random(50,450)*50)%450;
-   fill(255,255,0);
-   ellipse(randomX,randomY,50,50);
-  }
-
+  
 }
