@@ -26,13 +26,6 @@ void setup()
 void draw() 
 {
   background(100,200,150);
-  if (newoption == true)
-  {
-   randomX = (random(50,450)*50)%450;
-   randomY = (random(50,450)*50)%450;
-   fill(255,255,0);
-   ellipse(randomX,randomY,50,50);
-  }
     
   float targetX = mouseX;
   float targetY = mouseY;
@@ -50,4 +43,12 @@ void draw()
   {
     newoption = false;
   }
+    if (newoption == true)
+  {
+   randomX = (random(50,450)*50)%450;
+   randomY = (random(50,450)*50)%450;
+   fill(255,255,0);
+   ellipse(randomX,randomY,50,50);
+  }
+
 }
