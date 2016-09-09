@@ -44,6 +44,5 @@ void draw()
     randomY = (random(50,450)*50)%450;
     count++;
     //println(count);
-  }
-  
+  } 
 }
