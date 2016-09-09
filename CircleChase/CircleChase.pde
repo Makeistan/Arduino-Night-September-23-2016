@@ -24,7 +24,7 @@ void setup()
   ellipse(randomX,randomY,50,50);
   //////////////////////////////////
 }
-void draw() 
+void draw()
 {
   background(100,200,150);
   fill(255,255,0);
