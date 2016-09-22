@@ -1,3 +1,11 @@
+/*
+The code is taken and edited from the OpenProcessing Community. Find the original Sketch at [http://www.openprocessing.org/sketch/48672] coded by Aris Bezas.
+Thanks to Arduino, Firmata and Processing for providing such awesome tools to connect creativity with implementation.
+*/
+
+
+
+
 /**
 sKeTch is audiovisual application
  
@@ -11,8 +19,8 @@ SynthDef("Xaraktiki",
             { arg  amp = 0.5, pan = 0, out = 0;
                 var source;
                 var panned_source;
-                source = HPF.ar(BrownNoise.ar(amp, 0), myNewMouseX.kr(1000,8000));
-                panned_source = Pan2.ar(source, myNewMouseX.kr(-0.9, 0.9));
+                source = HPF.ar(BrownNoise.ar(amp, 0), MouseX.kr(1000,8000));
+                panned_source = Pan2.ar(source, MouseX.kr(-0.9, 0.9));
                 Out.ar( out, panned_source);
             }
        ).send(s);
@@ -63,12 +71,9 @@ float[] deltaX = new float[stoixeia];
 float[] deltaY = new float[stoixeia];
 float fxMouse, fyMouse;
  
-float myNewMouseX;
-float myNewMouseY;
-
 void setup()  {
   frameRate(240);
-  size(1080,720);
+  size(900,450);
  
   //oscP5 = new OscP5(this,46100);   //listening
   //myRemoteLocation = new NetAddress("127.0.0.1",57120);  //  speak to
@@ -81,46 +86,42 @@ void setup()  {
   line1.calcType( 0.1, 0.65 );// 0.2, 0.65 writeLine
   line2.calcType( 0.3, 0.65 );// 0.2, 0.65 writeLine
  
-  background(100,200,150);
+  background(0);
   noFill();
   smooth();
 //  noCursor();
   //cur = loadImage("cursor10black.png");
   //cur.resize(8, 8);
-  //cursor(cur, myNewMouseX, myNewMouseY);
- /*
+  //cursor(cur, mouseX, mouseY);
+ 
   for (int i=0; i<stoixeia; i++){
     elastikotita[i] = 0.2*(.07*(i+1));// 0.05  kai 0.005
     aposbesi[i] = 0.55-(0.02*i);
-  }*/
+  }
 }
  
-void draw()  
-{
-  myNewMouseX=mouseX;
-  myNewMouseY=mouseY;
-  
+void draw()  {
   myLine();
   noFill();
   if (mousePressed == true)  { 
-    line0.calcPoints(myNewMouseX, myNewMouseY);
+    line0.calcPoints(mouseX, mouseY);
     line0.render(255,0,0, lineAlpha);
-    line1.calcPoints(myNewMouseX, myNewMouseY);
+    line1.calcPoints(mouseX, mouseY);
     line1.render(255,255,0, lineAlpha);
-    line2.calcPoints(myNewMouseX, myNewMouseY);
+    line2.calcPoints(mouseX, mouseY);
     line2.render(255,255,255, lineAlpha);
   } else {
-      line0.calcPoints(myNewMouseX, myNewMouseY);
+      line0.calcPoints(mouseX, mouseY);
     line0.render(255,0,0, 0);
-    line1.calcPoints(myNewMouseX, myNewMouseY);
+    line1.calcPoints(mouseX, mouseY);
     line1.render(255,255,0, 0);
-    line2.calcPoints(myNewMouseX, myNewMouseY);
+    line2.calcPoints(mouseX, mouseY);
     line2.render(255,255,255, 0);
    
   }
   if (smoothFade) {
-    fill(0);
-    rect(0,0,width,height);
+    fill(0,12);
+    rect(-10,-10,width,height);
   }
 }
  
@@ -129,8 +130,8 @@ void myLine(){
   if (mousePressed == true)  { 
     if(miden == true) {
       for (int i=0; i<stoixeia; i++){
-        x[i] = myNewMouseX;// move worm
-        y[i] = myNewMouseY;
+        x[i] = mouseX;// move worm
+        y[i] = mouseY;
         miden = false;
       }
       //cursor(cur, 0,0);
@@ -146,8 +147,8 @@ void myLine(){
  
  
 void drawline(){
-    fxMouse = myNewMouseX;
-    fyMouse = myNewMouseY;
+    fxMouse = mouseX;
+    fyMouse = mouseY;
  // beginShape();
     for (int i=0; i<5; i++){
     if (i==0){
@@ -187,13 +188,13 @@ void mouseReleased()  {
    // oscP5.send(silence, myRemoteLocation);     
   }
  
-  line0.calcPointsStart(myNewMouseX, myNewMouseY);
+  line0.calcPointsStart(mouseX, mouseY);
 }
  
 void mousePressed()  {
-  line0.calcPointsStart(myNewMouseX, myNewMouseY);
-  line1.calcPointsStart(myNewMouseX, myNewMouseY);
-  line2.calcPointsStart(myNewMouseX, myNewMouseY); 
+  line0.calcPointsStart(mouseX, mouseY);
+  line1.calcPointsStart(mouseX, mouseY);
+  line2.calcPointsStart(mouseX, mouseY); 
 }
  
  
@@ -203,7 +204,7 @@ void mouseDragged() {
  
 void keyPressed(){
   if (key == 'z') {
-//    cursor(cur, 0, 0);
+    //cursor(cur, 0, 0);
   }
   if (key == 'b') {
     background(0);
@@ -284,8 +285,8 @@ class  SketchLine  {
     pointX = pointXVar;
     pointY = pointYVar;
     for (int i=0; i<stoixeia; i++){
-      x[i] = myNewMouseX;
-      y[i] = myNewMouseY;
+      x[i] = mouseX;
+      y[i] = mouseY;
     }
   }
  
