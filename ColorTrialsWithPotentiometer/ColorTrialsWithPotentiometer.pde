@@ -1,12 +1,9 @@
 /*
-The code is taken and edited from the OpenProcessing Community. Find the original Sketch at [http://www.openprocessing.org/sketch/48672] coded by Aris Bezas.
+----------------------------------------------------------------------------------------------------------------------
+The code is taken and edited from the OpenProcessing Community.
+ind the original Sketch at [http://www.openprocessing.org/sketch/48672] coded by Aris Bezas.
 Thanks to Arduino, Firmata and Processing for providing such awesome tools to connect creativity with implementation.
-*/
-
-
-
-
-/**
+----------------------------------------------------------------------------------------------------------------------
 sKeTch is audiovisual application
  
 Aris Bezas Sat, 16 July 2011, 17:31
@@ -19,8 +16,8 @@ SynthDef("Xaraktiki",
             { arg  amp = 0.5, pan = 0, out = 0;
                 var source;
                 var panned_source;
-                source = HPF.ar(BrownNoise.ar(amp, 0), MouseX.kr(1000,8000));
-                panned_source = Pan2.ar(source, MouseX.kr(-0.9, 0.9));
+                source = HPF.ar(BrownNoise.ar(amp, 0), myNewMouseX.kr(1000,8000));
+                panned_source = Pan2.ar(source, myNewMouseX.kr(-0.9, 0.9));
                 Out.ar( out, panned_source);
             }
        ).send(s);
@@ -71,7 +68,11 @@ float[] deltaX = new float[stoixeia];
 float[] deltaY = new float[stoixeia];
 float fxMouse, fyMouse;
  
-void setup()  {
+float myNewMouseX=0.0;
+float myNewMouseY=0.0;
+
+void setup()  
+{
   frameRate(240);
   size(900,450);
  
@@ -92,7 +93,7 @@ void setup()  {
 //  noCursor();
   //cur = loadImage("cursor10black.png");
   //cur.resize(8, 8);
-  //cursor(cur, mouseX, mouseY);
+  //cursor(cur, myNewMouseX, myNewMouseY);
  
   for (int i=0; i<stoixeia; i++){
     elastikotita[i] = 0.2*(.07*(i+1));// 0.05  kai 0.005
@@ -100,22 +101,25 @@ void setup()  {
   }
 }
  
-void draw()  {
+void draw()
+{
+  myNewMouseX=mouseX;
+  myNewMouseY=mouseY;
   myLine();
   noFill();
   if (mousePressed == true)  { 
-    line0.calcPoints(mouseX, mouseY);
+    line0.calcPoints(myNewMouseX, myNewMouseY);
     line0.render(255,0,0, lineAlpha);
-    line1.calcPoints(mouseX, mouseY);
+    line1.calcPoints(myNewMouseX, myNewMouseY);
     line1.render(255,255,0, lineAlpha);
-    line2.calcPoints(mouseX, mouseY);
+    line2.calcPoints(myNewMouseX, myNewMouseY);
     line2.render(255,255,255, lineAlpha);
   } else {
-      line0.calcPoints(mouseX, mouseY);
+      line0.calcPoints(myNewMouseX, myNewMouseY);
     line0.render(255,0,0, 0);
-    line1.calcPoints(mouseX, mouseY);
+    line1.calcPoints(myNewMouseX, myNewMouseY);
     line1.render(255,255,0, 0);
-    line2.calcPoints(mouseX, mouseY);
+    line2.calcPoints(myNewMouseX, myNewMouseY);
     line2.render(255,255,255, 0);
    
   }
@@ -130,8 +134,8 @@ void myLine(){
   if (mousePressed == true)  { 
     if(miden == true) {
       for (int i=0; i<stoixeia; i++){
-        x[i] = mouseX;// move worm
-        y[i] = mouseY;
+        x[i] = myNewMouseX;// move worm
+        y[i] = myNewMouseY;
         miden = false;
       }
       //cursor(cur, 0,0);
@@ -147,8 +151,8 @@ void myLine(){
  
  
 void drawline(){
-    fxMouse = mouseX;
-    fyMouse = mouseY;
+    fxMouse = myNewMouseX;
+    fyMouse = myNewMouseY;
  // beginShape();
     for (int i=0; i<5; i++){
     if (i==0){
@@ -188,13 +192,13 @@ void mouseReleased()  {
    // oscP5.send(silence, myRemoteLocation);     
   }
  
-  line0.calcPointsStart(mouseX, mouseY);
+  line0.calcPointsStart(myNewMouseX, myNewMouseY);
 }
  
 void mousePressed()  {
-  line0.calcPointsStart(mouseX, mouseY);
-  line1.calcPointsStart(mouseX, mouseY);
-  line2.calcPointsStart(mouseX, mouseY); 
+  line0.calcPointsStart(myNewMouseX, myNewMouseY);
+  line1.calcPointsStart(myNewMouseX, myNewMouseY);
+  line2.calcPointsStart(myNewMouseX, myNewMouseY); 
 }
  
  
@@ -285,8 +289,8 @@ class  SketchLine  {
     pointX = pointXVar;
     pointY = pointYVar;
     for (int i=0; i<stoixeia; i++){
-      x[i] = mouseX;
-      y[i] = mouseY;
+      x[i] = myNewMouseX;
+      y[i] = myNewMouseY;
     }
   }
  
