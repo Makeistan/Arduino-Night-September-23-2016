@@ -3,7 +3,9 @@
 The code is taken and edited from the OpenProcessing Community.
 ind the original Sketch at [http://www.openprocessing.org/sketch/48672] coded by Aris Bezas.
 Thanks to Arduino, Firmata and Processing for providing such awesome tools to connect creativity with implementation.
+Thanks to Aris Bezas for making this sketch possible!
 ----------------------------------------------------------------------------------------------------------------------
+
 sKeTch is audiovisual application
  
 Aris Bezas Sat, 16 July 2011, 17:31
@@ -32,7 +34,13 @@ OSCresponder(nil, "amp", { | time, resp, message |
  
  
 */
+
 import processing.opengl.*;
+import processing.serial.*;
+import cc.arduino.*;
+Arduino arduino;
+
+
 //import oscP5.*; 
 //import netP5.*;
  
@@ -71,10 +79,14 @@ float fxMouse, fyMouse;
 float myNewMouseX=0.0;
 float myNewMouseY=0.0;
 
+boolean mousepressed=true;
+
 void setup()  
 {
   frameRate(240);
   size(900,450);
+  arduino = new Arduino(this, "COM22", 57600);          //Put your Connected Serial Port here! e.g. "COM14", "COM18", "COM15" etc
+  //arduino.pinMode(0, Arduino.INPUT);                 //Only in case of Digital Pins!
  
   //oscP5 = new OscP5(this,46100);   //listening
   //myRemoteLocation = new NetAddress("127.0.0.1",57120);  //  speak to
@@ -103,11 +115,13 @@ void setup()
  
 void draw()
 {
-  myNewMouseX=mouseX;
-  myNewMouseY=mouseY;
+  myNewMouseX=map(arduino.analogRead(0), 0, 1023, 0, width);        //arduino.analogRead(0);
+  myNewMouseY=map(arduino.analogRead(1), 0, 1023, 0, height);        //arduino.analogRead(1);
+  println(myNewMouseX, ", ", myNewMouseY);
+
   myLine();
   noFill();
-  if (mousePressed == true)  { 
+  if (mousepressed == true)  { 
     line0.calcPoints(myNewMouseX, myNewMouseY);
     line0.render(255,0,0, lineAlpha);
     line1.calcPoints(myNewMouseX, myNewMouseY);
@@ -131,7 +145,7 @@ void draw()
  
 void myLine(){
  
-  if (mousePressed == true)  { 
+  if (mousepressed == true)  { 
     if(miden == true) {
       for (int i=0; i<stoixeia; i++){
         x[i] = myNewMouseX;// move worm
@@ -158,7 +172,7 @@ void drawline(){
     if (i==0){
       deltaX[i] = (fxMouse - x[i]);
       deltaY[i] = (fyMouse - y[i]);
-      if (mousePressed && xar)  {
+      if (mousepressed && xar)  {
         //OscMessage amp = new OscMessage("amp"); 
         //ElegxosAmp = map(abs(deltaX[i])+abs(deltaY[i]), 0, 340, 0, 0.2  );
        // amp.add(ElegxosAmp);
@@ -195,7 +209,7 @@ void mouseReleased()  {
   line0.calcPointsStart(myNewMouseX, myNewMouseY);
 }
  
-void mousePressed()  {
+void mousepressed()  {
   line0.calcPointsStart(myNewMouseX, myNewMouseY);
   line1.calcPointsStart(myNewMouseX, myNewMouseY);
   line2.calcPointsStart(myNewMouseX, myNewMouseY); 
@@ -264,7 +278,7 @@ class  SketchLine  {
       if (i==0){
         deltaX[i] = (pointX - x[i]);
         deltaY[i] = (pointY - y[i]);
-//        if (mousePressed)  {
+//        if (mousepressed)  {
 //          OscMessage amp = new OscMessage("amp"); 
 //          ElegxosAmp = map(abs(deltaX[i])+abs(deltaY[i]),0,340,0,1.6  );
 //          amp.add(ElegxosAmp);
