@@ -1,3 +1,8 @@
+/*
+Code is written by Aris Bezas & Taken from OpenProcessing Community and can be found at http://www.openprocessing.org/sketch/48672
+*/
+
+
 /**
 sKeTch is audiovisual application
  
@@ -63,12 +68,9 @@ float[] deltaX = new float[stoixeia];
 float[] deltaY = new float[stoixeia];
 float fxMouse, fyMouse;
  
-float myNewMouseX;
-float myNewMouseY;
-
 void setup()  {
   frameRate(240);
-  size(1080,720);
+  size(900,450);
  
   //oscP5 = new OscP5(this,46100);   //listening
   //myRemoteLocation = new NetAddress("127.0.0.1",57120);  //  speak to
@@ -81,24 +83,21 @@ void setup()  {
   line1.calcType( 0.1, 0.65 );// 0.2, 0.65 writeLine
   line2.calcType( 0.3, 0.65 );// 0.2, 0.65 writeLine
  
-  background(100,200,150);
+  background(0);
   noFill();
   smooth();
 //  noCursor();
   //cur = loadImage("cursor10black.png");
   //cur.resize(8, 8);
   //cursor(cur, mouseX, mouseY);
- /*
+ 
   for (int i=0; i<stoixeia; i++){
     elastikotita[i] = 0.2*(.07*(i+1));// 0.05  kai 0.005
     aposbesi[i] = 0.55-(0.02*i);
-  }*/
+  }
 }
  
 void draw()  {
-  myNewMouseX=mouseX;
-  myNewMouseY=mouseY;
-  
   myLine();
   noFill();
   if (mousePressed == true)  { 
@@ -118,8 +117,8 @@ void draw()  {
    
   }
   if (smoothFade) {
-    fill(0);
-    rect(0,0,width,height);
+    fill(0,12);
+    rect(-10,-10,width,height);
   }
 }
  
@@ -202,7 +201,7 @@ void mouseDragged() {
  
 void keyPressed(){
   if (key == 'z') {
-//    cursor(cur, 0, 0);
+    //cursor(cur, 0, 0);
   }
   if (key == 'b') {
     background(0);
